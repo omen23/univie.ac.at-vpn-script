@@ -6,5 +6,6 @@ Mit Plugininstaller für das doch funktionierende NP-API plugin, welches auch im
 vorhanden ist.
 
 1) INSTALLER
+
 2) CONNECTION MANAGER
 
