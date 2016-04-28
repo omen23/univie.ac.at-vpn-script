@@ -4,6 +4,9 @@
 # makes everything easier for everyone
 # GPL applies - atleast please mention me if you use parts of this script (=
 
+# ------------------
+# FUNCTIONS
+# ------------------
 f5prompt()
 {
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
@@ -23,9 +26,8 @@ fi
 done
 }
 
-
-readYes() {
-
+readYes()
+{
 while read -r -n 1 -s answer; do
   if [[ $answer = [JjNn] ]]; then
     [[ $answer = [Jj] ]] && retval=0
@@ -36,15 +38,16 @@ done
 echo # just a final linefeed, optics...
 return $retval
 }
+# ------------------
+# END OF FUNCTIONS
+# ------------------
 
-
-
-echo "University of Vienna VPN client Installations- und Verbindungsskript"
-echo "(C) 2016 by David Schuster"
-echo
 # ------------------
 #      INSTALLER
 # ------------------
+echo "University of Vienna VPN client Installations- und Verbindungsskript"
+echo "(C) 2016 by David Schuster"
+echo
 if [[ ! -e /usr/local/bin/f5fpc ]]
 then
 echo "F5 Client wird jetzt installiert..."
@@ -79,7 +82,7 @@ if [[ $(arch) == "x86_64" ]]
 then # we have a 64-bit platform
 cd ~/Desktop/VPN_Install/
 sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/
-elif [[ $(arch) =~ i.86 ]]  # we check for an i*86 platform
+elif [[ $(arch) =~ i.86 ]]  # we check for an i.86 platform
 then # we have a i.86 compatible platform
 cd ~/Desktop/VPN_Install/
 sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/
@@ -107,7 +110,7 @@ fi # end of installation check
 # ------------------
 echo "F5Networks Client bereit... connecte mit deiner u:account UserID"
 read -p "Bitte gib deine Matrikel-Nummer mit einem 'a' davor ein, gefolgt von [ENTER]: "
-f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/ # von zid tutorial site  
+f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/   
 echo "f5fpc> Wir warten ein paar Sekunden ..."
 sleep 9
 f5fpc -i &> /dev/null
