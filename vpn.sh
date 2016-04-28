@@ -2,6 +2,7 @@
 # (C) 2016 by David Schuster
 # for bash users of univie.ac.at to install and or run a vpn tunnel to university
 # makes everything easier for everyone
+# GPL applies - atleast please mention me if you use parts of this script (=
 
 f5prompt()
 {
