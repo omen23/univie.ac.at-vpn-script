@@ -74,21 +74,17 @@ echo -n "Mozilla Firefox Browser Plugin installieren? (J/N)? "
 if readYes
 then # you get the right browser plugin
 echo "Installiere Firefox Browser Plugin..."
-uname -mpi | grep x86_64 &> /dev/null
-if [[ $? -eq 0 ]]
+if [[ $(arch) == "x86_64" ]]
 then # we have a 64-bit platform
 cd ~/Desktop/VPN_Install/
 sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/
-else # we check for an i*86 platform
-uname -mpi | grep i.86 &> /dev/null
-if [[ $? -eq 0 ]]
+elif [[ $(arch) =~ i.86 ]]  # we check for an i*86 platform
 then # we have a i.86 compatible platform
 cd ~/Desktop/VPN_Install/
 sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/
 else
 echo "no working architecture found - skipping browser plugin installation."
-fi # end of i.86 if
-fi # end of x86_64 if
+fi # end of x86_64/i.86 if
 fi # end of plugin installer
 cd ~/Desktop/
 rm -rf ./VPN_Install/
