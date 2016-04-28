@@ -5,7 +5,7 @@
 # GPL applies - atleast please mention me if you use parts of this script (=
 
 # ------------------
-# FUNCTIONS
+#     FUNCTIONS
 # ------------------
 f5prompt()
 {
@@ -39,11 +39,11 @@ echo # just a final linefeed, optics...
 return $retval
 }
 # ------------------
-# END OF FUNCTIONS
+#  END OF FUNCTIONS
 # ------------------
 
 # ------------------
-#      INSTALLER
+#     INSTALLER
 # ------------------
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
 echo "(C) 2016 by David Schuster"
@@ -121,5 +121,5 @@ else # we got a problem
 echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
 fi # end connection check
 # ------------------
-#   END OF MANAGER
+#   END OF MANAGER  
 # ------------------
