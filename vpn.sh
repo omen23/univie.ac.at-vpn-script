@@ -64,7 +64,7 @@ fi # wget check
 type tar &> /dev/null
 if [[ $? -eq 0 ]]
 then
-tar -xvf BIGIPLinuxClient.tgz &> /dev/null
+tar -xf BIGIPLinuxClient.tgz 
 else
 echo "tar utility muss installiert sein!"
 exit
