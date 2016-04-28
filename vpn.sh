@@ -19,7 +19,7 @@ if [ "info" == "$answer" ] ; then
   f5fpc -i    
 elif [ "disconnect" == "$answer" ] ; then
   f5fpc -o
-  exit
+  exit 0
 else
   echo "f5fpc> Please type 'info' or 'disconnect'!"  
 fi
@@ -59,7 +59,7 @@ then
 wget -q https://vpn.univie.ac.at/public/share/BIGIPLinuxClient.tgz
 else
 echo "wget utility muss installiert sein!"
-exit
+exit 127
 fi # wget check
 type tar &> /dev/null
 if [[ $? -eq 0 ]]
@@ -67,7 +67,7 @@ then
 tar -xf BIGIPLinuxClient.tgz 
 else
 echo "tar utility muss installiert sein!"
-exit
+exit 127
 fi # tar check
 echo
 sleep 1
@@ -98,7 +98,7 @@ echo -n "Gleich verbinden? (J/N)? "
 if ! readYes
 then
 echo "Exiting ..."
-exit
+exit 0
 fi
 fi # end of installation check
 # ------------------
@@ -119,6 +119,7 @@ then # you're connected
 f5prompt
 else # we got a problem
 echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
+exit 1
 fi # end connection check
 # ------------------
 #   END OF MANAGER  
