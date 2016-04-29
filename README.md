@@ -10,5 +10,5 @@ welches auch im BIGIP tarball vorhanden ist.
 
 2) CONNECTION MANAGER
 
-Use to allow execution "chmod +x vpn.sh"
+Use "chmod +x vpn.sh" to allow execution - 
 then execute the script "./vpn.sh"
