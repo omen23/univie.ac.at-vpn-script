@@ -9,6 +9,7 @@
 # ------------------
 f5prompt()
 {
+trap "f5fpc -o; exit 1" SIGINT SIGHUP SIGTSTP SIGTERM
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
 echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
 while :
@@ -53,16 +54,15 @@ then
 echo "F5 Client wird jetzt installiert..."
 cd ~/Desktop/
 mkdir VPN_Install && cd VPN_Install
-type wget &> /dev/null
-if [[ $? -eq 0 ]]
+if type wget &> /dev/null
 then
 wget -q https://vpn.univie.ac.at/public/share/BIGIPLinuxClient.tgz
 else
 echo "wget utility muss installiert sein!"
 exit 127
 fi # wget check
-type tar &> /dev/null
-if [[ $? -eq 0 ]]
+
+if type tar &> /dev/null
 then
 tar -xf BIGIPLinuxClient.tgz 
 else
