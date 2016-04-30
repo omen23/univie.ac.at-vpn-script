@@ -9,7 +9,7 @@
 # ------------------
 f5prompt()
 {
-trap 'echo;echo "Disconnected successfully"; f5fpc -o &> /dev/null; exit 2' SIGINT SIGHUP SIGTSTP SIGTERM
+trap 'echo; echo "Disconnected successfully"; f5fpc -o &> /dev/null; exit 2' SIGINT SIGHUP SIGTSTP SIGTERM
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
 echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
 while :
@@ -65,9 +65,10 @@ fi
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
 echo "(C) 2016 by David Schuster"
 echo
-trap "clean_up 1" SIGTSTP SIGINT SIGTERM SIGHUP
+trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 if [[ ! -e /usr/local/bin/f5fpc ]]
 then
+trap "clean_up 1" SIGTSTP SIGINT SIGTERM SIGHUP
 echo "F5 Client wird jetzt installiert..."
 cd ~/Desktop/
 mkdir VPN_Install && cd VPN_Install
@@ -107,7 +108,7 @@ echo "no working architecture found - skipping browser plugin installation."
 fi # end of x86_64/i.86 if
 fi # end of plugin installer
 clean_up
-trap 'echo;echo "Caught signal..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
+trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 echo -n "Gleich verbinden? (J/N)? "
 if ! readYes
 then
@@ -118,12 +119,14 @@ fi # end of installation check
 # ------------------
 #  END OF INSTALLER
 # ------------------
+
 # ------------------
 # CONNECTION MANAGER
 # ------------------
+trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "F5Networks Client bereit... connecte mit deiner u:account UserID"
 read -p "Bitte gib deine Matrikel-Nummer mit einem 'a' davor ein, gefolgt von [ENTER]: "
-f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/   
+f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/
 echo "f5fpc> Wir warten ein paar Sekunden ..."
 sleep 9
 f5fpc -i &> /dev/null
