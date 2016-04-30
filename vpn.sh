@@ -9,7 +9,7 @@
 # ------------------
 f5prompt()
 {
-trap 'echo;echo "Disconnected successfully"; f5fpc -o &> /dev/null; exit 1' SIGINT SIGHUP SIGTSTP SIGTERM
+trap 'echo;echo "Disconnected successfully"; f5fpc -o &> /dev/null; exit 2' SIGINT SIGHUP SIGTSTP SIGTERM
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
 echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
 while :
@@ -45,10 +45,10 @@ clean_up()
 cd ~/Desktop/
 rm -rf ./VPN_Install/
 if [[ $1 -eq 1 ]] ; then
-echo "Caught signal - cleaning up!"
+echo "Caught signal - cleaning up and exiting!"
 exit 2
 elif [[ $1 -eq 127 ]] ; then
-echo "utility missing - exiting."
+echo "utility missing - cleaning up and exiting."
 exit 127
 else
 echo "Installation und cleanup fertig!"
@@ -107,7 +107,7 @@ echo "no working architecture found - skipping browser plugin installation."
 fi # end of x86_64/i.86 if
 fi # end of plugin installer
 clean_up
-trap "echo;exit 2" SIGTSTP SIGINT SIGTERM SIGHUP
+trap 'echo;echo "Caught signal..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 echo -n "Gleich verbinden? (J/N)? "
 if ! readYes
 then
