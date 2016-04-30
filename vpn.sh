@@ -107,7 +107,7 @@ echo "no working architecture found - skipping browser plugin installation."
 fi # end of x86_64/i.86 if
 fi # end of plugin installer
 clean_up
-trap "echo;exit 1" SIGTSTP SIGINT SIGTERM SIGHUP
+trap "echo;exit 2" SIGTSTP SIGINT SIGTERM SIGHUP
 echo -n "Gleich verbinden? (J/N)? "
 if ! readYes
 then
