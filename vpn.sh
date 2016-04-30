@@ -39,6 +39,22 @@ done
 echo # just a final linefeed, optics...
 return $retval
 }
+
+clean_up()
+{
+cd ~/Desktop/
+rm -rf ./VPN_Install/
+if [[ $1 -eq 1 ]] ; then
+echo "Caught signal - cleaning up!"
+exit 2
+elif [[ $1 -eq 127 ]] ; then
+echo "utility missing - exiting."
+exit 127
+else
+echo "Installation und cleanup fertig!"
+sleep 3
+fi
+}
 # ------------------
 #  END OF FUNCTIONS
 # ------------------
@@ -49,6 +65,7 @@ return $retval
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
 echo "(C) 2016 by David Schuster"
 echo
+trap "clean_up 1" SIGTSTP SIGINT SIGTERM SIGHUP
 if [[ ! -e /usr/local/bin/f5fpc ]]
 then
 echo "F5 Client wird jetzt installiert..."
@@ -59,15 +76,14 @@ then
 wget -q https://vpn.univie.ac.at/public/share/BIGIPLinuxClient.tgz
 else
 echo "wget utility muss installiert sein!"
-exit 127
+clean_up 127
 fi # wget check
-
 if type tar &> /dev/null
 then
 tar -xf BIGIPLinuxClient.tgz 
 else
 echo "tar utility muss installiert sein!"
-exit 127
+clean_up 127
 fi # tar check
 echo
 sleep 1
@@ -90,10 +106,7 @@ else
 echo "no working architecture found - skipping browser plugin installation."
 fi # end of x86_64/i.86 if
 fi # end of plugin installer
-cd ~/Desktop/
-rm -rf ./VPN_Install/
-echo "Installation und cleanup fertig!"
-sleep 3
+clean_up
 echo -n "Gleich verbinden? (J/N)? "
 if ! readYes
 then
@@ -104,7 +117,6 @@ fi # end of installation check
 # ------------------
 #  END OF INSTALLER
 # ------------------
-
 # ------------------
 # CONNECTION MANAGER
 # ------------------
