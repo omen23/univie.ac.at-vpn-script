@@ -43,7 +43,7 @@ return $retval
 clean_up()
 {
 cd ~/Desktop/
-rm -rf ./VPN_Install/
+rm -rf ./VPN_Install/ &> /dev/null
 if [[ $1 -eq 1 ]] ; then
 echo "Caught signal - cleaning up and exiting!"
 exit 2
