@@ -9,7 +9,7 @@
 # ------------------
 f5prompt()
 {
-trap 'echo; echo "Disconnected successfully"; f5fpc -o &> /dev/null; exit 2' SIGINT SIGHUP SIGTSTP SIGTERM
+trap 'echo; echo "Disconnected successfully"; echo; echo; f5fpc -o &> /dev/null; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
 echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
 while :
@@ -48,7 +48,7 @@ if [[ $1 -eq 1 ]] ; then
 echo "Caught signal - cleaning up and exiting!"
 exit 2
 elif [[ $1 -eq 127 ]] ; then
-echo "utility missing - cleaning up and exiting."
+echo "utility missing - cleaning up and exiting!"
 exit 127
 else
 echo "Installation und cleanup fertig!"
@@ -60,15 +60,34 @@ fi
 # ------------------
 
 # ------------------
+# CONNECTION MANAGER
+# ------------------
+connection_manager()
+{
+echo "F5Networks Client bereit... connecte mit deiner u:account UserID"
+read -p "Bitte gib deine Matrikel-Nummer mit einem 'a' davor ein, gefolgt von [ENTER]: "
+f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/
+echo "f5fpc> Wir warten ein paar Sekunden ..."
+sleep 9
+f5fpc -i &> /dev/null
+if [[ $? -eq 5 ]] # strange return code but it's F5Networks :P
+then # you're connected
+f5prompt
+else # we got a problem
+echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
+exit 1
+fi # end connection check
+}
+# ------------------
+#   END OF MANAGER  
+# ------------------
+
+# ------------------
 #     INSTALLER
 # ------------------
-echo "University of Vienna VPN client Installations- und Verbindungsskript"
-echo "(C) 2016 by David Schuster"
-echo
-trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
-if [[ ! -e /usr/local/bin/f5fpc ]]
-then
-trap "clean_up 1" SIGTSTP SIGINT SIGTERM SIGHUP
+do_install()
+{
+trap 'clean_up 1' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "F5 Client wird jetzt installiert..."
 cd ~/Desktop/
 mkdir VPN_Install && cd VPN_Install
@@ -110,33 +129,31 @@ fi # end of plugin installer
 clean_up
 trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
 echo -n "Gleich verbinden? (J/N)? "
-if ! readYes
+if readYes
 then
-echo "Exiting ..."
+connection_manager
+else
+echo "Exiting..."
 exit 0
 fi
-fi # end of installation check
+}
 # ------------------
 #  END OF INSTALLER
 # ------------------
 
 # ------------------
-# CONNECTION MANAGER
+#        MAIN       
 # ------------------
 trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
-echo "F5Networks Client bereit... connecte mit deiner u:account UserID"
-read -p "Bitte gib deine Matrikel-Nummer mit einem 'a' davor ein, gefolgt von [ENTER]: "
-f5fpc -s -t vpn.univie.ac.at:8443 -u "$REPLY" -d /etc/ssl/certs/
-echo "f5fpc> Wir warten ein paar Sekunden ..."
-sleep 9
-f5fpc -i &> /dev/null
-if [[ $? -eq 5 ]] # strange return code but it's F5Networks :P
-then # you're connected
-f5prompt
-else # we got a problem
-echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
-exit 1
-fi # end connection check
+echo "University of Vienna VPN client Installations- und Verbindungsskript"
+echo "(C) 2016 by David Schuster"
+echo
+if [[ ! -e /usr/local/bin/f5fpc ]] ; then
+  do_install  
+else
+  connection_manager
+fi
 # ------------------
-#   END OF MANAGER  
+#    END OF  MAIN       
 # ------------------
+
