@@ -45,6 +45,7 @@ clean_up()
 cd ~/Desktop/
 rm -rf ./VPN_Install/ &> /dev/null
 if [[ $1 -eq 1 ]] ; then
+  echo
   echo "Caught signal - cleaning up and exiting!"
   exit 2
 elif [[ $1 -eq 127 ]] ; then
