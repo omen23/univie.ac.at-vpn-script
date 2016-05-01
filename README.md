@@ -12,3 +12,5 @@ welches auch im BIGIP tarball vorhanden ist.
 
 Use "chmod +x vpn.sh" to allow execution - 
 then execute the script "./vpn.sh"
+
+1.5.2016 - Complete rewrite with functions and traps.
