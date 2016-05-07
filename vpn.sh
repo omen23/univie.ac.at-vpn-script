@@ -4,12 +4,36 @@
 # makes everything easier for everyone
 # GPL applies - atleast please mention me if you use parts of this script (=
 
+
+# ------------------
+#        MAIN       
+# ------------------
+main()
+{
+trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
+echo "University of Vienna VPN client Installations- und Verbindungsskript"
+echo "(C) 2016 by David Schuster"
+echo
+if [[ ! -e /usr/local/bin/f5fpc ]] ; then
+  do_install  
+else
+  connection_manager
+fi
+}
+# ------------------
+#    END OF  MAIN       
+# ------------------
+
 # ------------------
 #     FUNCTIONS
 # ------------------
+
+# ------------------
+#     F5 PROMPT             
+# ------------------
 f5prompt()
 {
-trap 'echo; echo "Disconnected successfully"; echo; echo; f5fpc -o &> /dev/null; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
+trap 'echo; echo "Disconnected successfully"; echo; echo; f5fpc -o &> /dev/null; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
 echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
 while :
@@ -27,6 +51,9 @@ do
 done
 }
 
+# ------------------
+#    YESNOPROMPT              
+# ------------------
 readYes()
 {
 while read -r -n 1 -s answer; do
@@ -40,6 +67,9 @@ echo # just a final linefeed, optics...
 return $retval
 }
 
+# ------------------
+#  CLEANUP/TRAPFUNC                
+# ------------------
 clean_up()
 {
 cd ~/Desktop/
@@ -47,7 +77,7 @@ rm -rf ./VPN_Install/ &> /dev/null
 if [[ $1 -eq 1 ]] ; then
   echo
   echo "Caught signal - cleaning up and exiting!"
-  exit 2
+  exit 130
 elif [[ $1 -eq 127 ]] ; then
   echo "utility missing - cleaning up and exiting."
   exit 127
@@ -56,9 +86,6 @@ else
   sleep 3
 fi
 }
-# ------------------
-#  END OF FUNCTIONS
-# ------------------
 
 # ------------------
 # CONNECTION MANAGER
@@ -79,9 +106,6 @@ else # we got a problem
   exit 1
 fi # end connection check
 }
-# ------------------
-#   END OF MANAGER  
-# ------------------
 
 # ------------------
 #     INSTALLER
@@ -128,7 +152,7 @@ if readYes
   fi # end of x86_64/i.86 if
 fi # end of plugin installer
 clean_up
-trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
+trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo -n "Gleich verbinden? (J/N)? "
 if readYes
   then
@@ -139,22 +163,13 @@ else
 fi
 }
 # ------------------
-#  END OF INSTALLER
+#  END OF FUNCTIONS
 # ------------------
 
 # ------------------
-#        MAIN       
+#    CALL TO MAIN               
 # ------------------
-trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 2' SIGTSTP SIGINT SIGTERM SIGHUP
-echo "University of Vienna VPN client Installations- und Verbindungsskript"
-echo "(C) 2016 by David Schuster"
-echo
-if [[ ! -e /usr/local/bin/f5fpc ]] ; then
-  do_install  
-else
-  connection_manager
-fi
+main "$@"
 # ------------------
-#    END OF  MAIN       
+#        EOF            
 # ------------------
-
