@@ -14,7 +14,7 @@ trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 130' SIGTSTP SIGINT
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
 echo "(C) 2016 by David Schuster"
 echo
-if [[ ! -e /usr/local/bin/f5fpc ]] ; then
+if [[ $(type -ap f5fpc) != "/usr/local/bin/f5fpc" ]] ; then # we know this path from the installer
   do_install  
 else
   connection_manager
@@ -41,7 +41,12 @@ do
   echo -n "f5fpc> "
   read answer
   if [ "info" == "$answer" ] ; then
-    f5fpc -i    
+    f5fpc -i
+    if [[ $? -eq 0 || $? -eq 85 ]] ; then
+    echo "You are not connected anymore!"
+    echo "Exiting..."
+    exit 1
+    fi
   elif [ "disconnect" == "$answer" ] ; then
     f5fpc -o
     exit 0
@@ -114,7 +119,7 @@ do_install()
 {
 trap 'clean_up 1' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "F5 Client wird jetzt installiert..."
-cd ~/Desktop/
+cd ~/Desktop/ # we want to stay in user-space
 mkdir VPN_Install && cd VPN_Install
 if type wget &> /dev/null
   then
@@ -134,7 +139,7 @@ echo
 sleep 1
 echo "Antworte zweimal mit 'yes' während der Installation."
 sleep 1
-sudo ./Install.sh
+sudo ./Install.sh # sorry xD but this is a service script
 echo -n "Mozilla Firefox Browser Plugin installieren? (J/N)? "
 if readYes
   then # you get the right browser plugin
@@ -142,11 +147,11 @@ if readYes
   if [[ $(arch) == "x86_64" ]]
     then # we have a 64-bit platform
     cd ~/Desktop/VPN_Install/
-    sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/
+    sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/ #properly escaped
   elif [[ $(arch) =~ i.86 ]]  # we check for an i.86 platform
     then # we have a i.86 compatible platform
     cd ~/Desktop/VPN_Install/
-    sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/
+    sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/ # :D
   else
     echo "no working architecture found - skipping browser plugin installation."
   fi # end of x86_64/i.86 if
