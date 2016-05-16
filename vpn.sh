@@ -42,9 +42,8 @@ do
   read answer
   if [ "info" == "$answer" ] ; then
     f5fpc -i
-    if [[ $? -eq 0 || $? -eq 85 ]] ; then
-    echo "You are not connected anymore!"
-    echo "Exiting..."
+    if [[ $? -ne 5 ]] ; then
+    echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
     exit 1
     fi
   elif [ "disconnect" == "$answer" ] ; then
