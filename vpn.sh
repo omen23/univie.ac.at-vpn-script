@@ -76,7 +76,7 @@ return $retval
 # ------------------
 clean_up()
 {
-rm -rf *
+rm -rf $PWD && cd ~/Desktop/
 if [[ $1 -eq 1 ]] ; then
   echo
   echo "Caught signal - cleaning up and exiting!"
