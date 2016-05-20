@@ -138,7 +138,7 @@ echo
 sleep 1
 echo "Antworte zweimal mit 'yes' während der Installation."
 sleep 1
-sudo ./Install.sh # sorry xD but this is a service script
+sudo ../VPN_Install/Install.sh # sorry xD but this is a service script
 echo -n "Mozilla Firefox Browser Plugin installieren? (J/N)? "
 if readYes
   then # you get the right browser plugin
