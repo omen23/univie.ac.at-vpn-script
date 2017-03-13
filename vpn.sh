@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# (C) 2016 - 2017 by David Schuster
+# (C) 2016-2017 by David Schuster
 # for bash users of univie.ac.at to install and or run a vpn tunnel to university
 # makes everything easier for everyone
 # GPL applies - atleast please mention me if you use parts of this script (=
@@ -35,7 +35,7 @@ f5prompt()
 {
 trap 'echo; echo "Disconnected successfully"; echo; echo; f5fpc -o &> /dev/null; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
-echo "f5fpc> und 'disconnect' trennt die VPN Verbindung."
+echo "f5fpc> und 'disconnect', 'quit' und 'exit' trennt die VPN Verbindung."
 while :
 do
   echo -n "f5fpc> "
@@ -77,11 +77,11 @@ return $retval
 clean_up()
 {
 rm -rf $PWD && cd ~/Desktop/
-if [[ $1 -eq 1 ]] ; then
+if [[ $1 -eq 1 ]]; then
   echo
   echo "Caught signal - cleaning up and exiting!"
   exit 130
-elif [[ $1 -eq 127 ]] ; then
+elif [[ $1 -eq 127 ]]; then
   echo "utility missing - cleaning up and exiting."
   exit 127
 else
