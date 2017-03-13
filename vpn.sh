@@ -6,22 +6,22 @@
 
 
 # ------------------
-#        MAIN       
+#        MAIN
 # ------------------
 main()
 {
 trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
-echo "(C) 2016 by David Schuster"
+echo "(C) 2016-2017 by David Schuster"
 echo
-if [[ $(type -ap f5fpc) != "/usr/local/bin/f5fpc" ]] ; then # we know this path from the installer
-  do_install  
+if [[ $(which f5fpc) != "/usr/local/bin/f5fpc" ]] ; then # we know this path from the installer
+  do_install
 else
   connection_manager
 fi
 }
 # ------------------
-#    END OF  MAIN       
+#    END OF  MAIN
 # ------------------
 
 # ------------------
@@ -29,7 +29,7 @@ fi
 # ------------------
 
 # ------------------
-#     F5 PROMPT             
+#     F5 PROMPT
 # ------------------
 f5prompt()
 {
@@ -46,17 +46,17 @@ do
     echo "f5fpc> Du bist nicht verbunden - irgendetwas ist schief gegangen."
     exit 1
     fi
-  elif [ "disconnect" == "$answer" ] ; then
+  elif [ "disconnect" == "$answer" -o "quit" == "$answer" -o "exit" == "$answer" ] ; then
     f5fpc -o
     exit 0
   else
-    echo "f5fpc> Please type 'info' or 'disconnect'!"  
+    echo "f5fpc> Please type 'info' for statistics or 'disconnect', 'quit' or 'exit' to terminate the connection!"
   fi
 done
 }
 
 # ------------------
-#    YESNOPROMPT              
+#    YESNOPROMPT
 # ------------------
 readYes()
 {
@@ -72,7 +72,7 @@ return $retval
 }
 
 # ------------------
-#  CLEANUP/TRAPFUNC                
+#  CLEANUP/TRAPFUNC
 # ------------------
 clean_up()
 {
@@ -127,7 +127,7 @@ else
 fi # wget check
 if type tar &> /dev/null
   then
-  tar -xf BIGIPLinuxClient.tgz 
+  tar -xf BIGIPLinuxClient.tgz
 else
   echo "tar utility muss installiert sein!"
   clean_up 127
@@ -142,10 +142,10 @@ if readYes
   then # you get the right browser plugin
   echo "Installiere Firefox Browser Plugin..."
   if [[ $(arch) == "x86_64" ]]
-    then # we have a 64-bit platform    
+    then # we have a 64-bit platform
     sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/ #properly escaped
   elif [[ $(arch) =~ i.86 ]]  # we check for an i.86 platform
-    then # we have a i.86 compatible platform    
+    then # we have a i.86 compatible platform
     sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/ # :D
   else
     echo "no working architecture found - skipping browser plugin installation."
@@ -167,9 +167,9 @@ fi
 # ------------------
 
 # ------------------
-#    CALL TO MAIN               
+#    CALL TO MAIN
 # ------------------
 main "$@"
 # ------------------
-#        EOF            
+#        EOF
 # ------------------
