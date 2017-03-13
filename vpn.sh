@@ -35,7 +35,8 @@ f5prompt()
 {
 trap 'echo; echo "Disconnected successfully"; echo; echo; f5fpc -o &> /dev/null; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "f5fpc> Du bist jetzt im f5fpc prompt, 'info' zeigt dir Statistiken des VPN Tunnels"
-echo "f5fpc> und 'disconnect', 'quit' und 'exit' trennt die VPN Verbindung."
+echo "f5fpc> und 'disconnect', 'quit' oder
+'exit' trennt die VPN Verbindung."
 while :
 do
   echo -n "f5fpc> "
