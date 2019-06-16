@@ -120,7 +120,7 @@ echo "F5 Client wird jetzt installiert..."
 cd $(mktemp -d)
 if type youtube-dl &> /dev/null
   then
-  youtube-dl https://openload.co/f/ZtsyNuT3lFM/BIGIPLinuxClient.tgz  -o BIGIPLinuxClient.tgz
+  youtube-dl -q https://openload.co/f/ZtsyNuT3lFM/BIGIPLinuxClient.tgz  -o BIGIPLinuxClient.tgz
 else
   echo "wget utility muss installiert sein!"
   clean_up 127
