@@ -122,7 +122,7 @@ if type youtube-dl &> /dev/null
   then
   youtube-dl -q https://openload.co/f/ZtsyNuT3lFM/BIGIPLinuxClient.tgz  -o BIGIPLinuxClient.tgz
 else
-  echo "wget utility muss installiert sein!"
+  echo "youtube-dl muss installiert sein!"
   clean_up 127
 fi # youtube-dl check
 if type tar &> /dev/null
