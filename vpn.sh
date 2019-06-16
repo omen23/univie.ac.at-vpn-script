@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# (C) 2016-2017 by David Schuster
+# (C) 2016-2019 by David Schuster
 # for bash users of univie.ac.at to install and or run a vpn tunnel to university
 # makes everything easier for everyone
 # GPL applies - atleast please mention me if you use parts of this script (=
@@ -12,7 +12,7 @@ main()
 {
 trap 'echo; echo "Caught signal..."; echo "Exiting..."; exit 130' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "University of Vienna VPN client Installations- und Verbindungsskript"
-echo "(C) 2016-2017 by David Schuster"
+echo "(C) 2016-2019 by David Schuster"
 echo
 if [[ $(which f5fpc) != "/usr/local/bin/f5fpc" ]] ; then # we know this path from the installer
   do_install
@@ -118,13 +118,13 @@ do_install()
 trap 'clean_up 1' SIGTSTP SIGINT SIGTERM SIGHUP
 echo "F5 Client wird jetzt installiert..."
 cd $(mktemp -d)
-if type wget &> /dev/null
+if type youtube-dl &> /dev/null
   then
-  wget -q https://vpn.univie.ac.at/public/share/BIGIPLinuxClient.tgz
+  youtube-dl https://openload.co/f/ZtsyNuT3lFM/BIGIPLinuxClient.tgz  -o BIGIPLinuxClient.tgz
 else
   echo "wget utility muss installiert sein!"
   clean_up 127
-fi # wget check
+fi # youtube-dl check
 if type tar &> /dev/null
   then
   tar -xf BIGIPLinuxClient.tgz
@@ -143,7 +143,7 @@ if readYes
   echo "Installiere Firefox Browser Plugin..."
   if [[ $(arch) == "x86_64" ]]
     then # we have a 64-bit platform
-    sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/ #properly escaped
+    sudo cp \{5984e8a4-b593-11e5-ad1f-ac88bb8e7f8b\}/plugins/np_F5_SSL_VPN_x86_64.so /usr/lib/mozilla/plugins/ #properly escaped
   elif [[ $(arch) =~ i.86 ]]  # we check for an i.86 platform
     then # we have a i.86 compatible platform
     sudo cp \{972ce4c6-7e08-4474-a285-3208198ce6fd\}/plugins/np_F5_SSL_VPN_i386.so /usr/lib/mozilla/plugins/ # :D
