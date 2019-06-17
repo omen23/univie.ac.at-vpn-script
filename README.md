@@ -11,7 +11,7 @@ Installiert auch das NPAPI plugin (für Firefox) (müsste testen ob NPAPI plugin
 
 2) CONNECTION MANAGER
 
-Use "chmod +x vpn.sh" to allow execution - 
-then execute the script "./vpn.sh"
+Use `chmod +x vpn.sh` to allow execution - 
+then execute the script `./vpn.sh`
 
 **7.5.2016** – Complete rewrite with functions and traps.
