@@ -2,7 +2,7 @@
 
 **update 16.6.2019**
 
-Ich hoste den BIGIPLinux client auf meinem openload account, also braucht man statt `wget` `youtube-dl`
+Ich hoste den `BIGIPLinuxClient.tar.gz` auf meinem openload account, da man ihn jetzt ohne Authentifikation nicht mehr saugej, also braucht man statt `wget` . `youtube-dl`
 Bash Skript um leicht auf die univie.ac.at VPN services zugreifen zu können ...
 
 Installiert auch das NPAPI plugin (für Firefox) (müsste testen ob NPAPI plugins wie das von F5 mit chromium/chrome funktioniert)
