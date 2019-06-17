@@ -1,10 +1,10 @@
 # univie.ac.at-vpn-script
 
-
+**update 16.6.2019**
+Ich hoste den BIGIPLinux client auf meinem openload account, also braucht man statt `wget` `youtube-dl`
 Bash Skript um leicht auf die univie.ac.at VPN services zugreifen zu können ...
 
-Mit Plugininstaller für Mozilla Firefox für das doch funktionierende NP-API plugin,
-welches auch im BIGIP tarball vorhanden ist.
+Installiert auch das NPAPI plugin (für Firefox) (müsste testen ob NPAPI plugins wie das von F5 mit chromium/chrome funktioniert)
 
 1) INSTALLER
 
