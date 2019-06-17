@@ -13,4 +13,4 @@ Installiert auch das NPAPI plugin (für Firefox) (müsste testen ob NPAPI plugin
 Use "chmod +x vpn.sh" to allow execution - 
 then execute the script "./vpn.sh"
 
-7.5.2016 - Complete rewrite with functions and traps.
+**7.5.2016** – Complete rewrite with functions and traps.
