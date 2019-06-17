@@ -1,5 +1,9 @@
 # univie.ac.at-vpn-script
 
+### dependencies
+```
+sudo apt install tar youtube-dl
+```
 **update 16.6.2019**
 
 Ich hoste den `BIGIPLinuxClient.tar.gz` auf meinem openload account, da man ihn jetzt ohne Authentifikation nicht mehr saugej, also braucht man statt `wget` . `youtube-dl`
